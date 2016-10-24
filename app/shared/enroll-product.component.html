@@ -1,0 +1,90 @@
+<div class="container">
+
+<div class="accord-wrap" *ngIf="!showEnrollConfirm">
+    <h2>{{model.linkName}}</h2> 
+    <hr>
+    <h4>Enrollment Link</h4>
+
+
+    <p>Select the contents of your smart link.</p>
+    <accordion>
+        <accordion-group *ngFor='let product of products | async' heading="{{product.productName}}" isOpen="true">
+
+            <input #si [checked]=false type="checkbox" (change)="onChecked(checked, product.productName, product.description,product.price, si.checked) "
+                (click)='checked.addFromCheckbox(si.checked)' name="{{product.productName}}" id="{{product.productName}}">
+
+            <label attr.for="{{product.productName}}"></label> {{product.description}}
+            <p class="quant-wrap">
+                <quantity #checked></quantity> <span class="price-wrap">{{product.price | currency:'USD':true:'1.2-2' }} </span> </p>
+            <div *ngFor='let subprod of product.subProducts '>
+                <input #si type="checkbox" #checkOn (change)="onChecked(checked,subprod.subProdOneName, subprod.subProdOneDesc,subprod.subProdOnePrice, si.checked)"
+                    (click)='checked.addFromCheckbox(si.checked)' name="{{subprod.subProdOneName}}" id="{{subprod.subProdOneName}}">
+                <label attr.for="{{subprod.subProdOneName}}"></label> {{subprod.subProdOneDesc}}
+                <p class="quant-wrap">
+                    <quantity #checked></quantity> <span class="price-wrap">{{subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }} </span>                    </p>
+
+            </div>
+
+        </accordion-group>
+
+    </accordion>
+
+</div>
+<!--end product accordion-->
+
+<!--review button-->
+<div *ngIf='showReviewBtn && !showEnrollConfirm' class="showReview">
+    <button (click)="showReview()" class="btn">Review Contents</button>
+
+</div><!--end review button-->
+
+ <!--review overlay-->
+    <div *ngIf='orderReview' class="review-order">
+        <div (click)="hideReview()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        <!-- TODO: need to loop through clicked items. Push clicked items and iterate through the array displaying them as they are added...
+        -->
+        <h4>Smart Link Name:</h4>
+        <h2>{{model.linkName}} Delete this</h2>
+        <hr>
+
+        <h4>New Member Info</h4>
+        <!--{{enrollModel.firstName}} {{enrollModel.middleInitial}} {{enrollModel.lastName}}-->
+        <h2> Delete This </h2>
+
+        <hr>
+        <h4>Your Smart Link Contents:</h4>
+        <div class="">
+
+            <ul id="product-list">
+                <li *ngFor='let selectedProd of productSelected'>
+
+                    {{selectedProd}} <span>{{selectedProd.price}}</span>
+                </li>
+            </ul>
+
+            <div class="total-price">
+                <h4>Total: ${{totalPrice}}</h4>
+            </div>
+        </div>
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReview()" class="dbtn">Edit Link Contents</button>
+            <a (click)="hideEnrollConfirm()"><button  class="btn">NEXT</button></a>
+
+        </div>
+    </div><!--end review overlay-->
+
+    <div *ngIf="showEnrollConfirm" class="enroll-link-confirm">
+
+        <p>Enrollment Smart Links are only available as personal links to be sent to one individual.</p>
+        <hr>
+        <div class="form-group consent">
+            <input #si type="checkbox" value="yes" name="pubok" id="pubok" [checked]=false (change)="onChecked(checked, si.checked)">
+            <label attr.for="pubok"> </label> I understand this link will be active for 60 days. At that point it will deactivate.
+        </div>
+        
+        <a>
+            <button [routerLink]="['PersonalShare']" type="submit" class="btn" >GENERATE LINK</button>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="grey-section">
+    <h4>This preconfigured shopping cart was prepared and sent to you by:</h4>
+    <h1>Delete this</h1>
+</div>
+
+<div class="product-section">
+    <p class="review-text">Simply review your items below, make any adjustments, and proceed to checkout.</p>
+    
+    <div *ngFor="let product of products | async" >
+        <div *ngFor="let subprod of product.subProducts" class="product-detail">
+            <hr>
+            <div class="product-image">
+                
+            </div>
+            <div class="product-description">
+                <p class="product-title">{{subprod.subProdOneName}}</p>
+                <quantity #checked></quantity>
+                <button class="delete-button">Delete</button>
+                <div class="clear"></div>
+                <p class="item-price">{{ subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }}</p>
+                <p class="item-price">40 PV</p>
+                <p class="item-details" (click)="showDescription()">See Details</p>
+            </div>
+            <p class="item-description" *ngIf="description" >{{subprod.subProdOneDesc}}</p>
+        </div>
+    </div>
+    <hr>
+    <div class="clear"></div>
+</div>

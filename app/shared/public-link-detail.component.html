@@ -1,0 +1,134 @@
+<div>
+
+    <h4 id="name-head-text">Smart link name:</h4>
+
+    <h1 id="link-name">Bob</h1>
+    
+    <!-- start detail (not editing) div -->
+    <div *ngIf="!editing && !duplicating" >  
+        <div class="grey-section">
+            <!--<h4>Created on 05/16/2016 for Bob Wiley</h4>-->
+            <!--<hr>-->
+            <h4>Preferred Customer</h4>
+        </div>
+
+        <div class="controls-section">
+            <div class="icon-spot" [routerLink]="['/PublicShare']">
+                <img src="app/assets/img/Icons/share_70@1x.png" alt="Share Link">
+            </div>
+            <div class="icon-spot" (click)="showEditing()">
+                <img src="app/assets/img/Icons/edit_70@1x.png" alt="Edit Link">
+            </div>
+            <div class="icon-spot" (click)="linkDuplicate()">
+                <img src="app/assets/img/Icons/duplicate_70@1x.png" alt="Duplicate Link">
+            </div>
+            <div class="icon-spot" (click)="linkReactivate()">
+                <img src="app/assets/img/refresh_70@1x.png" alt="Reactivate Link">
+            </div>
+            <div class="icon-spot" (click)="linkDelete()">
+                <img src="app/assets/img/Icons/delete_70@1x.png" alt="Delete Link">
+            </div>
+        </div>
+        <div class="clear"></div>
+        <hr>
+        <div class="products-section">
+            <div *ngFor='let product of products | async' class="product-details">
+                <h1 class="product-name">{{product.productName}}</h1>
+                <div  *ngFor='let subprod of product.subProducts '>
+                    <p class="item-name">{{subprod.subProdOneDesc}}</p>
+                    <p class="item-price">{{ subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>  
+    <!-- end detail (not editing) div -->
+
+    <div class="footer" *ngIf="!duplicating" >
+        <a *ngIf="!editing" [routerLink]="['/Start']"><button  class="btn">CREATE NEW SMART LINK</button></a>
+        <a *ngIf="editing"><button (click)="hideEditing()" class="btn">SAVE CHANGES</button></a>
+    </div>
+
+
+    <!--Reactivate overlay-->
+    <div *ngIf='reactivating' class="review-order">
+        <div (click)="hideReactivate()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        
+        <h1>Successful Reactivation!</h1>
+     
+        <h4 id="success-text">Links will remain active until 7/18/2018</h4>
+        
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReactivate()" class="btn overlay-btn">I UNDERSTAND</button>
+            
+        </div>
+    </div>
+
+    <!--Delete overlay-->
+    <div *ngIf='deleting' class="review-order">
+        <div (click)="hideDelete()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        
+     
+        <h4 id="success-text">Deleting smart links permanently erases all link data. If you wish to keep it for later, deactivate link instead.</h4>
+        
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReactivate()" class="btn overlay-btn">DELETE</button>
+        </div>
+        <div class="review-btns">
+            <button (click)="hideReactivate()" class="dbtn">DEACTIVATE</button>
+        </div>
+    </div>
+
+
+    <div *ngIf="editing || duplicating">
+        <p *ngIf="editing" id="link-question">Select which type of link you want to create.</p>
+        <!--<p *ngIf="duplicating" id="link-question">If needed, edit link contents below.</p>-->
+        <div *ngIf="editing" class="form-group select-box chooser">
+            <select #item (change)="onChange(item.value)" required name="smartlinkType" id="recipient-type" class="personal-link-input">
+                <option *ngFor="let lt of linkType" [value]="lt" >
+                {{lt}}</option>
+            </select>
+        </div> 
+
+        <p *ngIf="duplicating" id="link-question">If needed, edit link contents below.</p>
+        <!--product accordion-->
+        <div class="accord-wrap">
+            <accordion>
+                <accordion-group *ngFor='let product of products | async' heading="{{product.productName}}" isOpen="true">
+
+                    <input #si [checked]=false type="checkbox" (change)="onChecked(checked, product.productName, product.description,product.price, si.checked) "
+                        (click)='checked.addFromCheckbox(si.checked)' name="{{product.productName}}" id="{{product.productName}}">
+
+                    <label attr.for="{{product.productName}}"></label> {{product.description}}
+                    <p class="quant-wrap">
+                        <quantity #checked></quantity> <span class="price-wrap">{{product.price | currency:'USD':true:'1.2-2' }} </span> </p>
+                    <div *ngFor='let subprod of product.subProducts '>
+                        <input #si type="checkbox" #checkOn (change)="onChecked(checked,subprod.subProdOneName, subprod.subProdOneDesc,subprod.subProdOnePrice, si.checked)"
+                            (click)='checked.addFromCheckbox(si.checked)' name="{{subprod.subProdOneName}}" id="{{subprod.subProdOneName}}">
+                        <label
+                            attr.for="{{subprod.subProdOneName}}"></label> {{subprod.subProdOneDesc}}
+                            <p class="quant-wrap">
+                                <quantity #checked></quantity> <span class="price-wrap">{{subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }} </span>                                </p>
+
+                    </div>
+
+                </accordion-group>
+
+            </accordion>
+            
+        </div><!--end product accordion-->
+        <div class="form-group consent">
+            <!--<input #si type="checkbox" value="yes" name="consent" id="consent"[checked]=false (change)="onChecked(checked, si.checked)">-->
+            <a class="unchecked" *ngIf="!checkmark" (click)='checkMarking(checkmark)'></a>
+            <a class="way-checked" *ngIf="checkmark" (click)='checkMarking(checkmark)'></a>
+            <label attr.for="consent"> </label> I understand this link will be active for 60 days. At that point it will become invalid.
+        </div>
+        <a [routerLink]="['/PublicShare']">
+            <button type="submit" class="btn btn-default" (click)="newPersonalLink()">GENERATE LINK</button>
+        </a>
+    </div><!--end edit link-->
+
+
+</div> <!--end containing div-->

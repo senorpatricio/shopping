@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+    <meta charset="UTF-8">
+    <title>SmartLinks</title>
+    <!--<script>document.write('<base href="/" />');</script>-->
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7384272/801308/css/fonts.css" />
+    <link rel="stylesheet" href="app/assets/css/foundation.min.css">
+    <link href="app/assets/css/main.css" rel="stylesheet" />
+
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
+    <!-- Required for http -->
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+
+   <!-- Required for routing -->
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+
+
+    <!-- 2. Configure SystemJS -->
+    <script>
+      System.config({
+        map: {
+          clipboard: 'https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.js'
+        },
+        packages: {
+          app: {
+            format: 'register',
+            defaultExtension: 'js'
+          }
+        }
+      });
+      System.import('app/main')
+            .then(null, console.error.bind(console));
+    </script>
+</head>
+
+<body>
+  <div class="app-wrap">
+    <smart-link-app></smart-link-app>
+    
+    </div>
+    <script src="app/assets/js/vendor/jquery.js"></script>
+    <script src="app/assets/js/vendor/foundation.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/foundation/6.1.1/js/foundation.accordion.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+
+        $(document).foundation();
+    });
+</script>
+</body>
+
+</html>

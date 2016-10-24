@@ -1,0 +1,76 @@
+[
+    
+    {
+       "productId": 1,
+        "productName": "Jouvé",
+        "description": "Instant Tightening and Restoring Serum.",
+        "ingredients": "",
+        "price": 79.39,
+        "imageUrl": "../app/assets/img/products/jouve-tightener.jpg",
+        "accordianUrl": "",
+        "subProducts": [
+            {
+           "subProdOneName": "Brightener",
+            "subProdOneDesc": "Dark Spot Corrector and Brightening Cream",
+            "subProdOnePrice": 79.39  
+            },
+             {
+           "subProdOneName": "Jouvéskin",
+            "subProdOneDesc": "Jouvé Skin System",
+            "subProdOnePrice": 79.39  
+            }
+              
+        ]
+    },
+    {
+        "productId": 2,
+        "productName": "Nutrifii",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 80.00,
+        "imageUrl": "../app/assets/img/products/nutrifii-optimals.jpg",
+        "accordianUrl": ""
+                
+    },
+    {
+        "productId": 3,
+        "productName": "Priime",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 50.00,
+        "imageUrl": "../app/assets/img/products/nutrifii-vinali.jpg",
+        "accordianUrl": ""
+        
+    },
+    {
+        "productId": 4,
+        "productName": "Puritii",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 95.00,
+        "imageUrl": "",
+        "accordianUrl": ""
+        
+    },
+    {
+        "productId": 5,
+        "productName": "Reviive",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 70.00,
+        "imageUrl": "",
+        "accordianUrl": ""
+        
+    },
+    {
+        "productId": 6,
+        "productName": "Slenderiiz",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 125.00,
+        "imageUrl": "",
+        "accordianUrl": ""
+        
+    }
+    
+]

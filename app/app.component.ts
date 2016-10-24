@@ -1,0 +1,124 @@
+
+import {Component, Input, Output, ViewChild, OnInit, EventEmitter} from 'angular2/core';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import 'rxjs/Rx'; // Load all features
+import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig,Router, RouteParams} from 'angular2/router';
+import { enableProdMode } from 'angular2/core'; enableProdMode();
+import {provide} from 'angular2/core';
+import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
+import {ProductService} from './products/product.service';
+import {CheckBoxService} from './shared/checkBoxService';
+import {StartLinkComponent} from './home/startLink.component';
+import {LinkTypeComponent} from './shared/link.type.component';
+import {RecipientTypeComponent} from './shared/recipient-type.component';
+import {PublicLinkFormComponent} from './shared/public-link-form.component';
+import {MenuService} from './shared/menu.service';
+import {PublicShareComponent} from './shared/public-share.component';
+import {PersonalShareComponent} from './shared/personal-share.component';
+import {LinkBuildService} from './shared/linkBuild.service';
+import {ManageLinksComponent} from './products/manage.links.component';
+import {PersonalDetailComponent} from './shared/personal-link-detail.component';
+import {PublicDetailComponent} from './shared/public-link-detail.component';
+import {EnrollProductComponent} from './shared/enroll-product.component';
+import {RecipientAccountComponent} from './shared/recipient-account-info.component';
+import {RecipientOrderComponent} from './shared/recipient-order-view.component';
+import {RecipientCompleteOrderComponent} from './shared/recipient-complete.component';
+import {ThankYouComponent} from './shared/thank-you.component';
+
+
+
+@Component({
+    selector: "smart-link-app",
+    template: `
+    <div>
+      <header>
+            <div class="xlogo">
+               <a [routerLink]="['Start']"> <img src="{{imgUrl}}" alt="" styles="" id="headerimg">
+               <img *ngIf="logo" src="" alt="">
+                </a>
+            </div>
+           <nav id="main-nav" class="hideMenu view">
+                <ul>
+                    <!--<li  *ngFor="let menuItem of menuItems;  let isFirst = first" [class.active]="isFirst"  (click)="checkMenu($event,menuItem)" #unlock class="notactive">{{menuItem}}</li>-->
+                    <li (click)="onBack($event)" id="one"  class="active one">Step 1</li>
+                    <li (click)="onBack($event)" id="two"   class="inactive two unlock">Step 2</li>
+                    <li (click)="onBack($event)" id="three"  class="inactive three">Step 3</li>
+                    <li (click)="onBack($event)" id="four"  class="inactive four">Step 4</li>
+                </ul>
+            </nav>
+        </header>
+            <div class=container>
+              <router-outlet></router-outlet>
+            </div>  
+        </div>
+    `, 
+    
+     directives: [StartLinkComponent, ROUTER_DIRECTIVES, PublicShareComponent, PersonalShareComponent],
+    providers: [MenuService, LinkTypeComponent, ProductService, StartLinkComponent, HTTP_PROVIDERS, ROUTER_PROVIDERS,
+    provide(LocationStrategy,
+         {useClass: HashLocationStrategy})]    
+})
+@RouteConfig([
+    {path: '/startLink', name: 'Start', component: StartLinkComponent, useAsDefault: true},
+    {path: '/linkType', name: 'Link', component: LinkTypeComponent},
+    {path: '/recipientType', name: 'RecipientType', component: RecipientTypeComponent},
+    {path: '/enrollProduct', name: 'EnrollProduct', component: EnrollProductComponent},
+    {path: '/publicShare', name: 'PublicShare', component: PublicShareComponent},
+    {path: '/personalShare', name: 'PersonalShare', component: PersonalShareComponent},
+    {path: '/manageLinks', name: 'ManageLinks', component: ManageLinksComponent},
+    {path: '/personalDetail/:id', name: 'PersonalDetail', component: PersonalDetailComponent},
+    {path: '/publicDetail/:id', name: 'PublicDetail', component: PublicDetailComponent},
+    {path: '/recipientAccountCreate', name: 'RecipientAccountCreate', component: RecipientAccountComponent},
+    {path: '/recipientOrder', name: 'RecipientOrderComponent', component: RecipientOrderComponent},
+    {path: '/recipientCompleteOrder', name: 'RecipientCompleteOrderComponent', component: RecipientCompleteOrderComponent},
+    {path: '/thankyou', name: 'ThankYouComponent', component: ThankYouComponent}
+    
+])
+
+export class AppComponent {
+   
+   buildName: string;
+   logo: boolean = false;
+   imgUrl: string;
+   setupUrl: string = '/app/assets/img/logo_xOff_header@2x.png';
+   recipientUrl: string = '/app/assets/img/ARIIX_Logo_Gold@2x.png';
+    //@Input()
+    //showMenu: boolean = false;
+    constructor(public _menuService: MenuService,
+                private _router: Router) {
+        //this.linkBuild = new LinkBuildService();
+    }
+
+    onBack(event):void {
+        let step1 = document.querySelector("#one");
+        let step2 = document.querySelector("#two");
+        let step3 = document.querySelector("#three");
+        let step4 = document.querySelector("#four");
+
+        if(event.target.id === "one" && step1.classList.contains("unlocked")) {
+                this._menuService.checkMenu(1, "one");        
+        }
+        // if(event.target.id === "two" && step2.classList.contains("unlocked")) {
+        //         this._router.navigate(['Link']);        
+        // }
+       // this._router.navigate(['Link']);   
+
+        //this._router.navigate(['RecipientType']);
+
+    }
+    @Input()
+    headerImage(img:string) {
+        if(img === "setup") {
+            this.imgUrl = this.setupUrl;
+        }
+        if(img === "recipient") {
+            this.imgUrl = this.recipientUrl;
+        }
+
+
+    }
+    ngOnInit() {
+        this.headerImage('setup');
+    }
+    
+}

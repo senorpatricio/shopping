@@ -1,0 +1,34 @@
+<!--<div> <img src="app/assets/i" alt=""></div>-->
+
+<div class="recipient-view">
+    <h4>This preconfigured shopping cart was prepared and sent to you by:</h4>
+    <h1>STEVE SCHWARTZ </h1> 
+</div>
+<p class="recipient-instruct">
+     Simply review your items below, make any changes and proceesd to checkout
+
+    <!-- Grid with image description quantity delete
+                    price pv See Details
+
+    Subtotal: $555.50
+
+    BUY NOW button
+     -->
+</p>
+<table>
+    <tr *ngFor='let recip of recipientProds | async' class="recip-repeater">
+        <td> <img src="{{recip.imageUrl}}" alt=""></td><td> {{recip.description}} <br>
+          <p class="quant-wrap">
+            <quantity ></quantity> <button class="dbtn smaller">Delete</button> <br> </p>
+             
+            {{recip.price | currency:'USD':true:'1.2-2'}}
+        </td>
+    </tr>
+</table>
+<div>
+    <h4 class=sub-total>Sub Total: <b>384.39</b></h4>
+    <div>
+       <a [routerLink]="['RecipientAccountCreate']"> <button class="btn ">BUY NOW</button></a>
+       
+    </div>
+</div>

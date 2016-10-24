@@ -1,0 +1,67 @@
+System.register(['angular2/core'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1;
+    var LinkBuildService;
+    return {
+        setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            }],
+        execute: function() {
+            LinkBuildService = (function () {
+                function LinkBuildService() {
+                    this.smartlinkname = { name: "" };
+                    this.firstName = this.firstName;
+                    this.lastName = this.lastName;
+                    this.linkType = this.linkType;
+                    this.address = this.address;
+                    this.country = this.country;
+                    this.state = this.state;
+                    this.link = this.link;
+                    this.addProducts = [];
+                    this.menuTrack = [];
+                }
+                LinkBuildService.prototype.buildProducts = function (products) {
+                    // called in linkType each time user adds product...
+                    this.addProducts.push(products);
+                };
+                LinkBuildService.prototype.trackMenu = function (menuPos) {
+                    this.menuTrack.push(menuPos);
+                    console.log(this.menuTrack[0]);
+                };
+                Object.defineProperty(LinkBuildService.prototype, "linkedName", {
+                    get: function () {
+                        return this.linkName;
+                    },
+                    set: function (lName) {
+                        this.smartlinkname.name = lName;
+                        this.linkName = lName;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                LinkBuildService.prototype.setLinkName = function (lName) {
+                    this.smartlinkname.name = lName;
+                    console.log("Setting Smart Link name " + this.smartlinkname.name);
+                };
+                LinkBuildService = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [])
+                ], LinkBuildService);
+                return LinkBuildService;
+            }());
+            exports_1("LinkBuildService", LinkBuildService);
+        }
+    }
+});
+//# sourceMappingURL=linkBuild.service.js.map

@@ -1,0 +1,13 @@
+<div class="quantity-count">
+      <div class="quantity__container">       
+        <span class="qty">Qty:</span> <input type="text" id="qty" value="quantityValue" class="quantity__input" [value]="quantityValue">
+        <div class="item-btn-wrap">
+        <button (click)="increment();" class="quantity__button">
+          <div class="arrow-up"></div>
+        </button>
+         <button (click)="decrement();" class="quantity__button minus-btn">
+          <div class="arrow-down"></div>
+        </button>
+        </div>
+      </div>
+    </div>

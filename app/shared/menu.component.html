@@ -1,0 +1,9 @@
+ <nav id="main-nav" class="view">
+                <ul>
+                    <li  *ngFor="let menuItem of menuItems;  let isFirst = first" [class.active]="isFirst"  (click)="checkMenu($event,menuItem)" #unlock class="notactive">{{menuItem}}</li>
+                    <!--<li id="one" (click)="checkMenu()"  [className]="active">Step 1</li>
+                    <li id="two" (click)="checkMenu()"  [className]="inactive">Step 2</li>
+                    <li id="three" (click)="checkMenu()" [className]="'inactive'">Step 3</li>
+                    <li id="four" (click)="checkMenu()" [className]="'inactive'">Step 4</li>-->
+                </ul>
+            </nav>

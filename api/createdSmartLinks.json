@@ -1,0 +1,56 @@
+[
+    {
+        "smartLinkId": 1,
+        "smartLinkName": "Bob's Big Boy",
+        "brand": "Jouvé",
+        "description": "Instant Tightening and Restoring Serum.",
+        "jProducts": [
+            {
+                "subProdName": "Brightener",
+                "subProdDesc": "Dark Spot Corrector and Brightening Cream",
+                "subProdPrice": 79.39  
+            },
+            {
+                "subProdName": "Tightener",
+                "subProdDesc": "Gorilla Glue for your face.",
+                "subProdPrice": 79.39  
+            }
+        ]
+    },
+    {
+        "smartLinkId": 2,
+        "smartLinkName": "Gunther's link",
+        "brand": "Jouvé",
+        "description": "Instant Tightening and Restoring Serum.",
+        "jProducts": [
+            {
+                "subProdName": "Brightener",
+                "subProdDesc": "Dark Spot Corrector and Brightening Cream",
+                "subProdPrice": 95.39  
+            },
+            {
+                "subProdName": "Tightener",
+                "subProdDesc": "Gorilla Glue for your face.",
+                "subProdPrice": 95.39  
+            }
+        ]
+    },
+    {
+        "smartLinkId": 3,
+        "smartLinkName": "Joey Jojo",
+        "brand": "Nutrifii",
+        "description": "Pills to live like Elvis.",
+        "jProducts": [
+            {
+                "subProdName": "Bio Pro Q",
+                "subProdDesc": "Delays heart attacks",
+                "subProdPrice": 85.39  
+            },
+            {
+                "subProdName": "Vinalii",
+                "subProdDesc": "Not sure yet...",
+                "subProdPrice": 55.39  
+            }
+        ]
+    }
+]

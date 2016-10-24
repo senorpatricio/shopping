@@ -1,0 +1,98 @@
+<div id="choiceModule">
+    <!--<menu-app #step ></menu-app>-->
+    <div *ngIf='hideInstruction' class="intro-txt">
+        <p>
+            In a few simple steps you'll provide your customers with the easiest shopping experience abvailable.
+        </p>
+        <hr *ngIf='hideInstruction'>
+    </div>
+    <div class="select-txt">
+        <p>
+            Select which type of link you want to create.
+        </p>
+    </div>
+
+    <div class="chooser">
+        <!--<label for="power">Link Type</label>-->
+        <select class="link-type-input" name="smartlinkType" id="chooseSmart" required [(ngModel)]="model.linkType" #item (change)="onChange(item.value)">
+            <option *ngFor="let lt of linkType" [value]="lt">
+                 {{lt}}</option>
+        </select>
+    </div>
+
+    <hr *ngIf='hideInstruction'>
+    <div *ngIf='showProducts'  class="showproducts">
+        <div class="link-name">
+<<<<<<< HEAD
+            <input class="link-type-input" #linkname type="text" [(ngModel)]="model.linkName" name="linkname" placeholder=" Enter Link Name"/>
+=======
+            <input class="link-type-input" #linkname type="text" [(ngModel)]="model.linkName" name="linkname" placeholder=" Enter Link Name" required/>
+>>>>>>> 52e04292b13747429da8da1eaeb712d0ade2b1c0
+        </div>
+
+        <!--product accordion section-->
+        <div class="accord-wrap" *ngIf="!showEnrollment" >
+            <accordion>
+                <accordion-group *ngFor='let product of products | async' heading="{{product.productName}}" isOpen="true">
+
+                    <input #si [checked]=false type="checkbox" (change)="onChecked(checked, product.productName, product.description,product.price, si.checked) "
+                        (click)='checked.addFromCheckbox(si.checked)' name="{{product.productName}}" id="{{product.productName}}">
+
+                    <label attr.for="{{product.productName}}"></label> {{product.description}}
+                    <p class="quant-wrap">
+                        <quantity #checked></quantity> <span class="price-wrap">{{product.price | currency:'USD':true:'1.2-2' }} </span> </p>
+                    <div *ngFor='let subprod of product.subProducts '>
+                        <input #si type="checkbox" #checkOn (change)="onChecked(checked,subprod.subProdOneName, subprod.subProdOneDesc,subprod.subProdOnePrice, si.checked)"
+                            (click)='checked.addFromCheckbox(si.checked)' name="{{subprod.subProdOneName}}" id="{{subprod.subProdOneName}}">
+                        <label
+                            attr.for="{{subprod.subProdOneName}}"></label> {{subprod.subProdOneDesc}}
+                            <p class="quant-wrap">
+                                <quantity #checked></quantity> <span class="price-wrap">{{subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }} </span>                                </p>
+
+                    </div>
+
+                </accordion-group>
+
+            </accordion>
+            
+        </div><!--end product accordion-->
+    </div>
+    <enrollment *ngIf="showEnrollment" ></enrollment>
+    
+
+    <!--review button-->
+    <div *ngIf='showReviewBtn' class="showReview">
+        <button (click)="showReview()" class="btn">Review Contents</button>
+
+    </div><!--end review button-->
+
+    <!--review overlay-->
+    <div *ngIf='orderReview' class="review-order">
+        <div (click)="hideReview()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        <!-- TODO: need to loop through clicked items. Push clicked items and iterate through the array displaying them as they are added...
+        -->
+        <h4>Smart Link Name:</h4>
+        <h2>{{model.linkName}}</h2>
+        <hr>
+        <h4>Your Smart Link Contents:</h4>
+        <div class="">
+
+            <ul id="product-list">
+                <li *ngFor='let selectedProd of productSelected'>
+
+                    {{selectedProd}} <span>{{selectedProd.price}}</span>
+                </li>
+            </ul>
+
+            <div class="total-price">
+                <h4>Total: ${{totalPrice}}</h4>
+            </div>
+        </div>
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReview()" class="dbtn">Edit Link Contents</button>
+            <a [routerLink]="['RecipientType']"><button  class="btn">NEXT</button></a>
+
+        </div>
+    </div><!--end review overlay-->
+</div>

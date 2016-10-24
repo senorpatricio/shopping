@@ -1,0 +1,35 @@
+<!--<div> <img src="app/assets/i" alt=""></div>-->
+
+<div class="recipient-complete">
+   
+    <h1>Complete your purchase </h1> 
+</div>
+
+     <h4>Your order</h4>
+
+<table>
+    <tr *ngFor='let recip of recipientProds | async' class="recip-repeater-complete">
+        <td> <td>1 {{recip.description}} <br>
+          
+             
+            {{recip.price | currency:'USD':true:'1.2-2'}}
+        </td>
+    </tr>
+</table>
+<div>
+    Change quantities or delete items
+    <h4>Choose a delivery option</h4>
+    <select name="shipping" id="">
+
+
+    </select>
+    <h4>Payment Method</h4>
+    <input type="checkbox"> Use credit card on file
+</div>
+<div>
+    <h4 class=sub-total> Total: <b>405.84</b></h4>
+    <div>
+       <a [routerLink]="['RecipientAccountCreate']"> <button class="btn ">COMPLETE PURCHASE</button></a>
+       
+    </div>
+</div>

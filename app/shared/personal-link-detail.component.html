@@ -1,0 +1,243 @@
+<div>
+
+    <h4 id="name-head-text">Smart link name:</h4>
+
+    <h1 id="link-name">{{ linkname }}</h1>
+
+    <!-- start detail (not editing) div -->
+    <div *ngIf="!editing && !duplicating" > 
+        <div class="grey-section">
+            <h4>Created on 05/16/2016 for Bob Wiley</h4>
+            <hr>
+            <h4>Preferred Customer</h4>
+        </div>
+
+        <div class="controls-section">
+            <div class="icon-spot" [routerLink]="['/PersonalShare']">
+                <img src="app/assets/img/Icons/share_70@1x.png" alt="Share Link">
+            </div>
+            <div class="icon-spot" (click)="showEditing()">
+                <img src="app/assets/img/Icons/edit_70@1x.png" alt="Edit Link">
+            </div>
+            <div class="icon-spot" (click)="linkDuplicate()">
+                <img src="app/assets/img/Icons/duplicate_70@1x.png" alt="Duplicate Link">
+            </div>
+            <div class="icon-spot" (click)="linkReactivate()">
+                <img src="app/assets/img/refresh_70@1x.png" alt="Reactivate Link">
+            </div>
+            <div class="icon-spot" (click)="linkDelete()">
+                <img src="app/assets/img/Icons/delete_70@1x.png" alt="Delete Link">
+            </div>
+        </div>
+        <div class="clear"></div>
+        <hr>
+        <div class="products-section">
+            <div *ngFor='let product of products | async' class="product-details">
+                <h1 class="product-name">{{product.productName}}</h1>
+                <!--<p class="item-name">1 {{subprod.subProdOneDesc}}</p>
+                <p class="item-price">{{product.price | currency:'USD':true:'1.2-2' }}</p>-->
+                <div  *ngFor='let subprod of product.subProducts '>
+                    <p class="item-name">{{subprod.subProdOneDesc}}</p>
+                    <p class="item-price">{{ subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }}</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="footer" *ngIf="!duplicating" >
+        <a *ngIf="!editing" [routerLink]="['/Start']"><button  class="btn">CREATE NEW SMART LINK</button></a>
+        <a *ngIf="editing"><button (click)="hideEditing()" class="btn">SAVE CHANGES</button></a>
+    </div>
+
+
+    <!--Reactivate overlay-->
+    <div *ngIf='reactivating' class="review-order">
+        <div (click)="hideReactivate()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        
+        <h1>Successful Reactivation!</h1>
+     
+        <h4 id="success-text">Links will remain active until 7/18/2018</h4>
+        
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReactivate()" class="btn overlay-btn">I UNDERSTAND</button>
+            
+        </div>
+    </div>
+
+    <!--Delete overlay-->
+    <div *ngIf='deleting' class="review-order">
+        <div (click)="hideDelete()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        
+     
+        <h4 id="success-text">Deleting smart links permanently erases all link data. If you wish to keep it for later, deactivate link instead.</h4>
+        
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReactivate()" class="btn overlay-btn">DELETE</button>
+        </div>
+        <div class="review-btns">
+            <button (click)="hideReactivate()" class="dbtn">DEACTIVATE</button>
+        </div>
+    </div>
+
+    <!--edit link-->
+    <div *ngIf="editing || duplicating">
+        <p *ngIf="editing" id="link-question">Select which type of link you want to create.</p>
+        <!--<p *ngIf="duplicating" id="link-question">If needed, edit link contents below.</p>-->
+        <div *ngIf="editing" class="form-group select-box chooser">
+            <select #item (change)="onChange(item.value)" required name="smartlinkType" id="recipient-type" class="personal-link-input">
+                <option *ngFor="let lt of linkType" [value]="lt" >
+                {{lt}}</option>
+            </select>
+        </div> 
+
+        <!--personal form-->
+        <div *ngIf="duplicating" id="showpersonal" >
+    
+           
+            
+
+            <form #personalLinkForm="ngForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter New Link Name" ngControl="linkName" [(ngModel)]="model.linkName" #linkName="ngForm" class="personal-link-input">
+                    <!--<div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger"></div>-->
+                </div>
+                <hr>
+                <p class="intro-text">Enter whatever contact information you have for the recipient of this smart link. No fields are required, but it makes their purchase faster.</p>
+                <div class="form-group">
+                    <input type="text" placeholder="First Name" ngControl="firstName" [(ngModel)]="model.firstName" #firstName="ngForm" class="personal-link-input">
+                    <!--<div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger"></div>-->
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Last Name" ngControl="lastName" [(ngModel)]="model.lastName" #lastName="ngForm" class="personal-link-input">
+                    <!--<div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger"></div>-->
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Address 1" ngControl="address1" [(ngModel)]="model.address1" #address1="ngForm" class="personal-link-input">
+                    <!--<div [hidden]="address1.valid || address1.pristine" class="alert alert-danger"></div>-->
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Address 2" ngControl="address2" [(ngModel)]="model.address2" #address2="ngForm" class="personal-link-input">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="City" ngControl="city" [(ngModel)]="model.city" #city="ngForm" class="personal-link-input">
+                </div>
+                <div class="form-group select-box chooser">
+                    <select type="text" placeholder="State" ngControl="state" [(ngModel)]="model.state" #state="ngForm" class="personal-link-input">
+                        <option *ngFor="let state of states" [value]="state">{{state}}</option>     
+                    </select>
+                    <!--<select type="text" placeholder="State" ngControl="state" [(ngModel)]="model.state" #state="ngForm" class="personal-link-input">
+                        <option value="AA">State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>-->
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Zip Code" ngControl="zipCode" [(ngModel)]="model.zipCode" #zipCode="ngForm" class="personal-link-input">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Mobile Phone Number" ngControl="mobilePhoneNumber" [(ngModel)]="model.mobilePhoneNumber" #mobilePhoneNumber="ngForm" class="personal-link-input">
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" ngControl="email" [(ngModel)]="model.email" #email="ngForm" class="personal-link-input">
+                </div>
+                <!--<div class="form-group consent">
+                    <a class="unchecked" *ngIf="!checkmark" (click)='checkMarking(checkmark)'></a>
+                    <a class="way-checked" *ngIf="checkmark" (click)='checkMarking(checkmark)'></a>
+                    <label for=""> </label> I understand this link will be active for 60 days. At that point it will become invalid.
+                </div>-->
+                <!--<a [routerLink]="['/PersonalShare']">
+                    <button type="submit" class="btn btn-default" (click)="newPersonalLink()">GENERATE LINK</button>
+                </a>-->
+            </form>
+
+        </div> <!--end personal form-->
+        <p *ngIf="duplicating" id="link-question">If needed, edit link contents below.</p>
+        <!--product accordion-->
+        <div class="accord-wrap">
+            <accordion>
+                <accordion-group *ngFor='let product of products | async' heading="{{product.productName}}" isOpen="true">
+
+                    <input #si [checked]=false type="checkbox" (change)="onChecked(checked, product.productName, product.description,product.price, si.checked) "
+                        (click)='checked.addFromCheckbox(si.checked)' name="{{product.productName}}" id="{{product.productName}}">
+
+                    <label attr.for="{{product.productName}}"></label> {{product.description}}
+                    <p class="quant-wrap">
+                        <quantity #checked></quantity> <span class="price-wrap">{{product.price | currency:'USD':true:'1.2-2' }} </span> </p>
+                    <div *ngFor='let subprod of product.subProducts '>
+                        <input #si type="checkbox" #checkOn (change)="onChecked(checked,subprod.subProdOneName, subprod.subProdOneDesc,subprod.subProdOnePrice, si.checked)"
+                            (click)='checked.addFromCheckbox(si.checked)' name="{{subprod.subProdOneName}}" id="{{subprod.subProdOneName}}">
+                        <label
+                            attr.for="{{subprod.subProdOneName}}"></label> {{subprod.subProdOneDesc}}
+                            <p class="quant-wrap">
+                                <quantity #checked></quantity> <span class="price-wrap">{{subprod.subProdOnePrice | currency:'USD':true:'1.2-2' }} </span>                                </p>
+
+                    </div>
+
+                </accordion-group>
+
+            </accordion>
+            
+        </div><!--end product accordion-->
+        <div class="form-group consent">
+            <!--<input #si type="checkbox" value="yes" name="consent" id="consent"[checked]=false (change)="onChecked(checked, si.checked)">-->
+            <a class="unchecked" *ngIf="!checkmark" (click)='checkMarking(checkmark)'></a>
+            <a class="way-checked" *ngIf="checkmark" (click)='checkMarking(checkmark)'></a>
+            <label attr.for="consent"> </label> I understand this link will be active for 60 days. At that point it will become invalid.
+        </div>
+        <a [routerLink]="['/PersonalShare']">
+            <button type="submit" class="btn btn-default" (click)="newPersonalLink()">GENERATE LINK</button>
+        </a>
+    </div><!--end edit link-->
+</div> <!--end containing div-->

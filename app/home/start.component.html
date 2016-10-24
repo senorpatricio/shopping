@@ -1,0 +1,16 @@
+<div class="intro-block">
+            <h1>Smart Links</h1>
+            <hr>
+            <h2>Welcome {{memberName}}</h2>
+            <p>Would you like to play a game?</p>
+            <p>How about {{gameName}}?</p>
+        </div>
+        <div class="start-link">
+        <a [routerLink]="['/Link/:begin']">
+        <button class="btn">Create New Smart Link</button>
+        </a>
+        <a [routerLink]="['/ManageLinks']">
+         <button [disabled]="!isValid" class="dbtn">Manage Smart Links</button>
+        </a>
+           
+        </div>

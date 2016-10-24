@@ -1,0 +1,78 @@
+<div class="container">
+
+    <div class="publicShare">
+<<<<<<< HEAD
+        <h1  id="link-name">{{linkname}} Delete this</h1>
+
+=======
+        <h1  id="link-name">{{linkname}}</h1>
+           
+>>>>>>> 52e04292b13747429da8da1eaeb712d0ade2b1c0
+        <hr>
+        <h4 id="share-text">Share this public link</h4>
+
+        <p class="copy-text">Copy this URL to share:</p>
+        <div class="copy-section">
+            <input type="text" class="personal-link-input" id=""><a (click)="showCopy()" id="copy-button">COPY</a>   
+        </div>
+        <div *ngIf="copyConfirm" class="copy-overlay">
+            <p>URL has been copied to the clipboard</p>
+        </div>
+
+        <div class="social-media-section">
+            <p class="copy-text">Share via social media</p>
+
+            <a href="" alt="" id="left-icon"> <img src="/app/assets/img/SocialMedia/Facebook.png" class="social-icon"/> </a>
+            <a href="" alt=""> <img src="/app/assets/img/SocialMedia/Twitter.png" class="social-icon"/> </a>
+            <a href="" alt=""> <img src="/app/assets/img/SocialMedia/Instagram.png" class="social-icon"/> </a>
+            <a href="" alt=""> <img src="/app/assets/img/SocialMedia/Google.png" class="social-icon"/> </a>
+        </div>
+
+        <p class="copy-text">Share via email (multiple addresses separated by a comma if necessary)</p>
+        <div class="copy-section">
+            <input type="text" class="personal-link-input" id="" placeholder="Enter E-mail Address">
+            <button (click)="showReview()" id="send-button" *ngIf="hideLink"><a>SEND</a></button>
+            
+        </div>
+        
+        <a *ngIf="hideLink" (click)="onClick()" class="personal-note-text">Add personal note</a>
+        <div *ngIf="showNote" id="send-note">
+            <textarea name="" id="" cols="30" rows="10" class="personal-link-input personal-notearea"></textarea>
+            <button (click)="failReview()"><a id="send-button-with-note">SEND</a></button>
+        </div>
+    </div>
+
+     <div *ngIf='sendSuccess' class="review-order">
+        <div (click)="hideReview()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        <!-- TODO: need to loop through clicked items. Push clicked items and iterate through the array displaying them as they are added...
+        -->
+        <h1>Success!</h1>
+        <hr>
+        <h4><img src="/app/assets/img/UI_elements/check_green.png" alt="Check"> E-mail sent</h4>
+        
+        
+        <div class="review-btns">
+            <a [routerLink]="['/Start']"><button  class="btn">CREATE NEW SMART LINK</button></a>
+            <button (click)="hideReview()" class="dbtn">SHARE AGAIN</button>
+            <a [routerLink]="['/ManageLinks']"><button (click)="hideReview()" class="dbtn">MANAGE SMART LINKS</button></a>
+            
+            
+        </div>
+    </div>
+
+    <div *ngIf='sendFail' class="review-order">
+        <div (click)="hideFailReview()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        <!-- TODO: need to loop through clicked items. Push clicked items and iterate through the array displaying them as they are added...
+        -->
+        <h1>Something went wrong!</h1>
+        <hr>
+        <h4 id="fail-text"><img src="/app/assets/img/UI_elements/x_red.png" alt="Not Sent"> E-mail not sent</h4>
+        
+        
+        <div class="review-btns">
+            <button (click)="hideFailReview()" class="dbtn">TRY AGAIN</button>
+            
+        </div>
+    </div>
+
+</div> <!--end container-->

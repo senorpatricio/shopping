@@ -1,0 +1,82 @@
+ 
+ <div class="intro-block">
+            <h1 class="manage-header">Your Smart Links</h1>
+            <hr>
+            <div class="link-type">
+                <button id="personLink"  #personal (click)="publicLinks($event)" class="btn side ">Personal Links</button>
+                 <button id="pubLink"  #public (click)="publicLinks($event) "  class="side btn dbtn">Public Links</button>
+            </div>
+        </div>
+        <select  name="managelinkType" id="manageSmart"  required
+            #item (change)="onChange(item.value)" >
+            <option *ngFor="let dm of dropMenu" [value]="dm">
+                 {{dm}}</option>
+          </select>
+          <div *ngIf="activeLinks" class="delete-btns">
+              <button (click)="showDelete()"  class="dbtn delete manage-delete ">Delete</button>
+              <button   class="dbtn deactivate manage-delete ">Deactivate </button>
+          </div>
+          <div *ngIf="inactiveLinks" class="delete-btns">
+              <button (click)="showDelete()"  class="dbtn delete manage-delete ">Delete</button>
+              <button (click)="showReactivateLink()"  class="dbtn deactivate manage-delete ">Reactivate </button>
+          </div>
+          <div *ngIf="activeLinks" class="product-table">
+              <table >
+                  <tr class=t-header>
+                    <th>NAME</th> <th>PRICE</th> <th>EXPIRES</th> <th>SALES</th>
+                  </tr>
+                  <tr *ngFor='let link of links | async' >
+                     <td> <input type="checkbox" id="{{link.linkName}}"> <label attr.for="{{link.linkName}}"></label> <a [routerLink]="['PersonalDetail', {id:link.linkId}]"><h4>{{link.linkName}}</h4></a></td>
+                     <td> <input type="checkbox"> <h4>{{link.price | currency:'USD':true:'1.2-2'}}</h4></td>
+                     <td> <input type="checkbox"> <h4>{{link.expired}}</h4></td>
+                     <td> <input type="checkbox"> <h4>{{link.sales}}</h4></td>
+                  </tr>
+              </table>
+          </div>
+
+          <div *ngIf="inactiveLinks" class="product-table">
+              <table >
+                  <tr class=t-header>
+                    <th>NAME</th> <th>PRICE</th> <th>EXPIRED</th> <th>SALES</th>
+                  </tr>
+                  <tr *ngFor='let plink of plinks | async' >
+                     <td> <input type="checkbox" id="{{plink.linkName}}"> <label attr.for="{{plink.linkName}}"></label> <a [routerLink]="['PublicDetail', {id:plink.linkId}]"><h4>{{plink.linkName}}</h4></a></td>
+                     <td> <input type="checkbox"> <h4>{{plink.price | currency:'USD':true:'1.2-2'}}</h4></td>
+                     <td> <input type="checkbox"> <h4>{{plink.expired}}</h4></td>
+                     <td> <input type="checkbox"> <h4>{{plink.sales}}</h4></td>
+                  </tr>
+              </table>
+          </div>
+
+           <!--review overlay-->
+    <div *ngIf='deleteInactLink' class="review-order">
+        <div (click)="hideDelete()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        <!-- TODO: need to loop through clicked items. Push clicked items and iterate through the array displaying them as they are added...
+        -->
+        <h4 class="delete-link">You are deleting an inactive link(s). This link and all associated data will be erased.</h4>
+        <h4 class="delete-sub">Are you sure you want to delete?</h4>
+        
+        <hr>
+        <div class="review-btns">
+            <button (click)="deleteLink()" class="btn">DELETE</button>
+            <button (click)="hideDelete()"  class="dbtn">CANCEL</button>
+
+        </div>
+    </div><!--end review overlay-->
+
+     <!--review overlay-->
+    <div *ngIf='showReactivate' class="review-order">
+        <div (click)="hideReactivateLink()" class="review-close"><img src="/app/assets/img/Icons/close_70dsktp.png" alt="Close"></div>
+        <!-- TODO: need to loop through clicked items. Push clicked items and iterate through the array displaying them as they are added...
+        -->
+        <h1 class="delete-link">SUCCESSFUL REACTIVATION</h1>
+        <h4 class="delete-sub">Links will remain active until <br>
+           {{reactivateDate}}
+        </h4>
+        
+        <hr>
+        <div class="review-btns">
+            <button (click)="hideReactivateLink()" class="btn">I UNDERSTAND</button>
+           
+        </div>
+    </div><!--end review overlay-->

@@ -1,0 +1,44 @@
+[
+    
+    {
+       "productId": 1,
+        "productName": "Jouvé",
+        "description": "Instant Tightening and Restoring Serum.",
+        "ingredients": "",
+        "price": 79.39,
+        "imageUrl": "../app/assets/img/products/jouve-tightener.jpg",
+        "accordianUrl": ""
+       
+    },
+    {
+        "productId": 2,
+        "productName": "Jouvé System",
+        "description": "Jouvé Skin System",
+        "ingredients": "",
+        "price": 80.00,
+        "imageUrl": "../app/assets/img/products/jouve-tightener.jpg",
+        "accordianUrl": ""
+                
+    },
+    {
+        "productId": 3,
+        "productName": "Optimals(V&M)",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 50.00,
+        "imageUrl": "../app/assets/img/products/nutrifii-optimals.jpg",
+        "accordianUrl": ""
+        
+    },
+    {
+        "productId": 4,
+        "productName": "Vinalii",
+        "description": "Skin enhancement system stuff to look better than dead.",
+        "ingredients": "",
+        "price": 95.00,
+        "imageUrl": "../app/assets/img/products/nutrifii-vinali.jpg",
+        "accordianUrl": ""
+        
+    }
+    
+]
